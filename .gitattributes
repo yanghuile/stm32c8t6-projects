@@ -1,0 +1,54 @@
+# ============================================================
+#  .gitattributes —— 换行符策略
+#
+#  背景：
+#    你的机器【系统级】设了 core.autocrlf=true（在
+#    C:\Program Files\Git\etc\gitconfig 里），这会导致
+#    每次 git add 都报 "LF will be replaced by CRLF" 警告。
+#
+#    那个设置的意思是"仓库存 LF，工作区转 CRLF"。
+#
+#  本仓库的策略：
+#    Windows 专用工程 → 全部用 CRLF，和 Keil 原生一致，不会再报警告
+#
+#  说明：这里和 c-learning 仓库的策略不同（那边是 eol=lf）。
+#        原因：c-learning 是纯 C 代码学习仓库，跨平台友好；
+#              本仓库是 Keil 专用工程，只在 Windows 上用，
+#              用 CRLF 可以避免 git 反复转换。
+# ============================================================
+
+# 默认：自动识别文本文件，统一在仓库里存 LF
+* text=auto
+
+# ---------- 源码：工作区用 CRLF（Keil 原生格式）----------
+*.c        text eol=crlf
+*.h        text eol=crlf
+*.s        text eol=crlf
+
+# ---------- Keil 工程文件：CRLF ----------
+*.uvprojx  text eol=crlf
+*.uvoptx   text eol=crlf
+*.uvproj   text eol=crlf
+*.uvopt    text eol=crlf
+
+# ---------- 文档：CRLF（Windows 记事本也友好）----------
+*.md       text eol=crlf
+*.txt      text eol=crlf
+
+# ---------- Windows 批处理：必须 CRLF ----------
+# cmd.exe 用 LF 解析 if/for 多行块会出错！
+*.cmd      text eol=crlf
+*.bat      text eol=crlf
+
+# ---------- 二进制：git 不要做任何转换 ----------
+*.o        binary
+*.axf      binary
+*.hex      binary
+*.bin      binary
+*.elf      binary
+*.map      binary
+*.a        binary
+*.exe      binary
+*.png      binary
+*.jpg      binary
+*.pdf      binary
