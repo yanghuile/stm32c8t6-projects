@@ -109,4 +109,17 @@ static inline void gpio_toggle(GPIO_TypeDef *port,uint32_t pin)
 	}
 }
 
+/* 读引脚电平：返回 0 或 1 */
+static inline uint32_t gpio_read(GPIO_TypeDef *port, uint32_t pin)
+{
+    if((port->IDR&(1UL<<pin))==0)
+	{
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
+}
+
 #endif 
