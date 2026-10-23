@@ -41,6 +41,9 @@ JLinkSettings*
 Target_1_*.dbgconf
 *.dbgconf
 
+# Keil Event Recorder 自动生成的组件描述文件
+*.scvd
+
 # ---------- 系统 ----------
 Thumbs.db
 desktop.ini
