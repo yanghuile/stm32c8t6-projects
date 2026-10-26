@@ -1,38 +1,42 @@
 #include "stm32f103.h"
-#include "led.h"
+#include "Delay.h"
+
+#define LED_PIN 0
 
 int main(void)
 {
 	RCC->APB1ENR |= RCC_APB1ENR_TIM2EN ;
+	RCC->APB2ENR |= RCC_APB2ENR_IOPAEN ;
 	
-	TIM2->PSC=7199;
-	TIM2->ARR=9999;
+	gpio_config (GPIOA,LED_PIN,GPIO_CFG_AF_PP_50MHZ );
+	
+	TIM2->PSC=71;
+	TIM2->ARR=99;
 	TIM2->CNT=0;
 	
+	TIM2->CCMR1 =(6UL<<4)|(1UL<<3);
+	TIM2->CCER|=1;
+	
 	TIM2->EGR=1;
+	TIM2->SR &= ~(1U << 0);
 	
-	TIM2->SR=(uint16_t )~1;
+	TIM2->CR1|=(1UL<<7)|1;
 	
-	TIM2->DIER |=1;
-	
-	TIM2->CR1|=1;
-	
-	NVIC_IPR[IRQ_TIM2] = (uint8_t)(3 << 4);
-	NVIC_ISER0 |= (1UL << IRQ_TIM2);
-	
-	LED_Init ();
+	uint32_t duty=0;
 	
     while (1)
     {
-       
+		for(duty=0;duty <=99;duty++)
+		{
+			TIM2->CCR1=duty;
+			Delay_ms(10);
+		}
+		for(duty=0;duty <=99;duty++)
+		{
+			TIM2->CCR1=99-duty;
+			Delay_ms(10);
+		}
     }
 }
 
-void TIM2_IRQHandler(void)
-{
-    if (TIM2->SR & 1)                    
-    {
-        TIM2->SR = (uint16_t)~1;         /* 写 0 清除，不用 &= */
-        LED_Toggle();
-    }
-}
+
