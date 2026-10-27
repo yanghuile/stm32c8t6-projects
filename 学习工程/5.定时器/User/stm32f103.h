@@ -6,6 +6,7 @@
 #define RCC  ((RCC_TypeDef *)0x40021000UL)
 #define AFIO  ((AFIO_TypeDef *)0x40010000UL)
 #define EXTI  ((EXTI_TypeDef *)0x40010400UL)
+#define TIM1  ((TIM_TypeDef *)0x40012C00UL)
 #define TIM2  ((TIM_TypeDef *)0x40000000UL)
 #define TIM3  ((TIM_TypeDef *)0x40000400UL)
 #define TIM4  ((TIM_TypeDef *)0x40000800UL)
@@ -14,6 +15,9 @@
 #define RCC_APB1ENR_TIM2EN   (1UL << 0)
 #define RCC_APB1ENR_TIM3EN   (1UL << 1)
 #define RCC_APB1ENR_TIM4EN   (1UL << 2)
+
+/* RCC->APB2ENR 的定时器时钟使能位 */
+#define RCC_APB2ENR_TIM1EN   (1UL << 11)
 
 /* APB2ENR 位定义 */
 #define RCC_APB2ENR_IOPAEN    (1UL << 2)
@@ -48,8 +52,8 @@
 #define NVIC_ISER0   (*(volatile uint32_t *)0xE000E100UL)   /* 使能 IRQ 0~31  */
 #define NVIC_ISER1   (*(volatile uint32_t *)0xE000E104UL)   /* 使能 IRQ 32~63 */
 #define NVIC_ICER0   (*(volatile uint32_t *)0xE000E180UL)   /* 关闭 IRQ 0~31  */
-#define NVIC_ISER(idx) ((idx) < 32 ? (NVIC_ISER0 = (1UL << (idx))) \
-                                   : (NVIC_ISER1 = (1UL << ((idx) - 32))))
+#define NVIC_ISER(idx) ((idx) < 32 ? (NVIC_ISER0 |= (1UL << (idx))) \
+                                   : (NVIC_ISER1 |= (1UL << ((idx) - 32))))
 
 /* 优先级寄存器：每个中断占 1 字节，只写入高 4 位有效 */
 #define NVIC_IPR     ((volatile uint8_t  *)0xE000E400UL)
@@ -71,6 +75,7 @@
 #define IRQ_DMA1_CH1     11
 #define IRQ_ADC1_2       18
 #define IRQ_EXTI9_5      23
+#define IRQ_TIM1         25    
 #define IRQ_TIM2         28
 #define IRQ_TIM3         29
 #define IRQ_TIM4         30
@@ -145,6 +150,7 @@ typedef struct
     volatile uint32_t CCR2;     /* 0x38 */
     volatile uint32_t CCR3;     /* 0x3C */
     volatile uint32_t CCR4;     /* 0x40 */
+	volatile uint32_t BDTR;		/* 0x44 */
 } TIM_TypeDef;
 
 /* ============================================================

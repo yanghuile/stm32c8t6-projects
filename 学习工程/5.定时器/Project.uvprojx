@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_MD,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>.\Start;.\User;.\Library;.\System;.\Hardware;.\Hardware\LED</IncludePath>
+              <IncludePath>.\Start;.\User;.\Library;.\System;.\Hardware;.\Hardware\LED;.\Hardware\KEY;.\Hardware\TIMER</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -669,6 +669,16 @@
               <FileName>led.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Hardware\LED\led.c</FilePath>
+            </File>
+            <File>
+              <FileName>key.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\KEY\key.c</FilePath>
+            </File>
+            <File>
+              <FileName>timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\TIMER\timer.c</FilePath>
             </File>
           </Files>
         </Group>
