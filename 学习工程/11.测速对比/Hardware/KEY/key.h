@@ -1,4 +1,4 @@
-#ifndef KEY_H
+﻿#ifndef KEY_H
 #define KEY_H
 
 #include <stdint.h>

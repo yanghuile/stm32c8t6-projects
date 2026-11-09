@@ -1,4 +1,4 @@
-#ifndef STM32F103_H
+﻿#ifndef STM32F103_H
 #define STM32F103_H
 
 #include <stdint.h>

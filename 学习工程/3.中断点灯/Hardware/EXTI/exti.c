@@ -1,4 +1,4 @@
-#include "exti.h"
+﻿#include "exti.h"
 
 static volatile uint32_t s_count[16];   /* 每个 pin 一个计数器 */
 

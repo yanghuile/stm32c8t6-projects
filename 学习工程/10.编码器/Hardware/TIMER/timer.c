@@ -1,4 +1,4 @@
-#include "timer.h"
+﻿#include "timer.h"
 #include "stm32f103.h"
 
 static uint32_t tick_of(TIM_TypeDef *tim);
